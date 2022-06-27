@@ -9,6 +9,7 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
-    "typescript": "./node_modules/typescript/bin/tsc"
+    "typescript": "./node_modules/typescript/bin/tsc",
+    "ts-node": "./node_modules/ts-node/dist/bin.js"
   }
 }
