@@ -73,7 +73,7 @@ class Snake extends Animal {
         return "Snake";
     }
     get call(): string {
-        return "bissing";
+        return "hissing";
     }
 }
 
