@@ -18,8 +18,9 @@
  *  - You can create an instance of the superclass
  * 
  * Abstract Extension:
- *  - A class can only extend one class
  *  - abstract class keyword
+ *  - You cannot create an instance of an abstract class, it must be extended
+ *  - A class can only extend one class
  *  - Similar to Extends
  *  - Used in cases where you would like to define a partial implementation of a superclass that is meant to be extended
  *      - if you would like to implement a method signature that is to be implemented in a subclass, you can use the abstract keyword
@@ -232,6 +233,7 @@ snake.slither();
 
 // superclass access
 const dog_animal: Animal = dog; // dog is type Dog and Animal so it can be assigned to an Animal variable without complaint
+dog.isEating;
 
 // interface access
 const whale_interface: Swimmer = whale; // whale is type Whale and also Swimmer, so it can be assigned to a swimmer variable without complaint
