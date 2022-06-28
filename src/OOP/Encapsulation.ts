@@ -10,6 +10,8 @@
  * 2: Allows custom logic to run when getting + setting values
  * 3: Prevents the consumer from setting instance members in a way that is inconsistent
  * 4: Consumer does not need to worry as much about how to format a value, that is left to the class (ties in with Abstraction)
+ * 
+ * In a nutshell, a class that adheres to Encapsulation must not set instance members to public, and instead provide getters and setters for each instance member that is intended to be publicly written or read
  */
 
 // a baseline class that defines some base behaviour of an animal
