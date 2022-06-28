@@ -1,16 +1,46 @@
 /**
- * Encapsulation is the principle which defines *access* to a particular object
- * A class adhering to Encapsulation must:
- * 1: Define a private state (If needed)
- * 2: Provide a public list of methods that allow manipulation of private state (if needed)
- * 3: Do not set state variables to be public
+ * Inheritance is the concept by which an object/class is able to obtain some/all properties of another object/class
+ * Most of us will be familiar with the concept of one class extending another class. E.g "Class Dog extends Animal"
  * 
- * This principle allows a few things to take place
- * 1: Explicit control over what is returned
- * 2: Allows custom logic to run when getting + setting values
- * 3: Prevents the consumer from setting instance members in a way that is inconsistent
- * 4: Consumer does not need to worry as much about how to format a value, that is left to the class (ties in with Abstraction)
+ * When extending a class, the new subclass has access to all private, protected and public members of its superclass
+ * A subclass is free to implement its own members, whether that's methods, variables or some combination of both
+ * 
+ * If a superclass has a constructor, it is also run in the constructor of a subclass
+ * 
+ * All objects of a subclass, are also types of their superclass
+ * 
+ * In Typescript we usually have 3 different types of inheritance. Extends, Implements and Abstract Extension
+ * 
+ * Extends: 
+ *  - class keyword
+ *  - A class can only extend one class
+ *  - The superclass has logic for each of its methods, a subclass can inherit these methods and use them
+ *  - You can create an instance of the superclass
+ * 
+ * Abstract Extension:
+ *  - A class can only extend one class
+ *  - abstract class keyword
+ *  - Similar to Extends
+ *  - Used in cases where you would like to define a partial implementation of a superclass that is meant to be extended
+ *      - if you would like to implement a method signature that is to be implemented in a subclass, you can use the abstract keyword
+ *  - Also used in cases where you would like to add some common functionality to many classes
+ * 
+ *  * Implements:
+ *  - interface keyword
+ *  - A class can implement many interfaces
+ *  - An interface that can be used to specify required method signatures for a class
+ *  - Used a lot in frameworks where inversion of control is a large part of the functionality
+ *  - You cannot create an instance of an interface
+ *      - this gets a little muddy in typescript as interfaces can also be used in place of "type" and 
+ *        are often used to define object structure without needing to create an instance of something
+ * 
+ * NOTE: Implements doesn't totally come under the umbrella of Inheritance, as an interface does not have functionality, but merely defines the "shape" of a class
+ * That being said it is good to bring up here
+ * 
+ * In all 3 cases, all subclasses are of type superclass. However variables that type an object as the superclass will only have access to members of the superclass, not the subclass
  */
+
+// Below is a more complex example from the Encapsulation doc that also implements inheritance in a few forms
 
 // a class that we can use to audit access to a class instance
 abstract class Auditable {
@@ -119,38 +149,91 @@ abstract class Animal extends Auditable {
     }
 }
 
-class Dog extends Animal {
+interface Walker {
+    walk(): void;
+}
+
+interface Swimmer {
+    swim(): void;
+}
+
+interface Slitherer {
+    slither(): void;
+}
+
+class Dog extends Animal implements Walker {
+
+    // abstract method in Animal that must be implemented
     get animalName(): string {
         return "Dog";
     }
+
+    // abstract method in Animal that must be implemented
     get call(): string {
         return "barking";
     }
+
+    // Method signature in Walker that must be implemented
+    walk() {
+        console.log("The dog walks away from you");
+    }
 }
 
-class Whale extends Animal {
+class Whale extends Animal implements Swimmer {
+
+    // abstract method in Animal that must be implemented
     get animalName(): string {
         return "Whale";
     }
+
+    // abstract method in Animal that must be implemented
     get call(): string {
         return "clicking";
     }
+
+    // Method signature in Walker that must be implemented
+    swim() {
+        console.log("The whale swims away from you");
+    }
 }
 
-class Snake extends Animal {
+class Snake extends Animal implements Slitherer {
+
+    // abstract method in Animal that must be implemented
     get animalName(): string {
         return "Snake";
     }
+
+    // abstract method in Animal that must be implemented
     get call(): string {
         return "hissing";
+    }
+
+    // Method signature in Walker that must be implemented
+    slither() {
+        console.log("The whale swims away from you");
     }
 }
 
 // after all is said an done, it is very simple for a consumer to use the classes
-const dog = new Dog();
-const whale = new Whale();
-const snake = new Snake();
+const dog: Dog = new Dog();
+const whale: Whale = new Whale();
+const snake: Snake = new Snake();
 
+// can access setters
 dog.isEating = true;
 whale.isSleeping = true;
 snake.isPlaying = true;
+
+// can access methods prescribed by interfaces
+dog.walk();
+whale.swim();
+snake.slither();
+
+// superclass access
+const dog_animal: Animal = dog; // dog is type Dog and Animal so it can be assigned to an Animal variable without complaint
+
+// interface access
+const whale_interface: Swimmer = whale; // whale is type Whale and also Swimmer, so it can be assigned to a swimmer variable without complaint
+//whale_interface.isEating; // this doesn't work as the Swimmer type does not have the isEating member, even though the whale object itself has it
+
